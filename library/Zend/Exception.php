@@ -28,11 +28,6 @@
 class Zend_Exception extends Exception
 {
     /**
-     * @var null|Throwable
-     */
-    private $_previous = null;
-
-    /**
      * Construct the exception
      *
      * @param  string $msg
