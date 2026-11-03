@@ -32,8 +32,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**@+
      * Plugin loader Constants
      */
-    const FILTER    = 'FILTER';
-    const VALIDATE  = 'VALIDATE';
+    public const FILTER    = 'FILTER';
+    public const VALIDATE  = 'VALIDATE';
     /**@-*/
 
     /**
@@ -324,10 +324,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**
      * Adds a new validator for this class
      *
-     * @param  string|array $validator           Type of validator to add
-     * @param  boolean      $breakChainOnFailure If the validation chain should stop an failure
-     * @param  string|array $options             Options to set for the validator
-     * @param  string|array $files               Files to limit this validator to
+     * @param  string|Zend_Validate_Interface $validator           Type of validator to add
+     * @param  boolean                        $breakChainOnFailure If the validation chain should stop an failure
+     * @param  string|array                   $options             Options to set for the validator
+     * @param  string|array                   $files               Files to limit this validator to
      * @return Zend_File_Transfer_Adapter_Abstract
      */
     public function addValidator($validator, $breakChainOnFailure = false, $options = null, $files = null)
@@ -575,7 +575,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                         case 'ignoreNoFile' :
                         case 'useByteString' :
                         case 'detectInfos' :
-                            $this->_files[$key]['options'][$name] = (boolean) $value;
+                            $this->_files[$key]['options'][$name] = (bool) $value;
                             break;
 
                         default:
@@ -1240,7 +1240,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     {
         if (file_exists($value['name'])) {
             $result = sprintf("%u", @filesize($value['name']));
-        } else if (file_exists($value['tmp_name'])) {
+        } else if (file_exists((string) $value['tmp_name'])) {
             $result = sprintf("%u", @filesize($value['tmp_name']));
         } else {
             return null;
@@ -1289,7 +1289,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     {
         if (file_exists($value['name'])) {
             $file = $value['name'];
-        } else if (file_exists($value['tmp_name'])) {
+        } else if (file_exists((string) $value['tmp_name'])) {
             $file = $value['tmp_name'];
         } else {
             return null;
